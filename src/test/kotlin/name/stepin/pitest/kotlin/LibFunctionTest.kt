@@ -1,7 +1,7 @@
 package name.stepin.pitest.kotlin
 
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import kotlin.test.assertTrue
 
 internal class LibFunctionTest {
 

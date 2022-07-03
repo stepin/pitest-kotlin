@@ -37,6 +37,7 @@ tasks.jar {
         attributes(
             mapOf(
                 "Implementation-Title" to project.name,
+                "Implementation-Vendor" to project.group,
                 "Implementation-Version" to project.version
             )
         )
@@ -49,15 +50,15 @@ java {
 
 publishing {
     publications {
-        create<MavenPublication>("myLibrary") {
+        create<MavenPublication>("pitest-kotlin") {
             from(components["java"])
         }
     }
 
     repositories {
         maven {
-            name = "myRepo"
-            url = uri(layout.buildDirectory.dir("repo"))
+            name = "github-pitest-kotlin"
+            url = uri("https://maven.pkg.github.com/stepin/pitest-kotlin")
         }
     }
 }
