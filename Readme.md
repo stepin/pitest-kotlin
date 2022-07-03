@@ -9,6 +9,10 @@ When the plugin is enabled pitest will avoid creating junk mutations in code tha
 * safe casts
 * elvis operator
 
+This project is based on github.com/pitest/pitest-kotlin but it's rewritten to be able to maintain it.
+
+Feel free to post bug reports and PRs.
+
 ## Usage
 
 The plugin requires pitest 1.7.4. Other versions are not tested.
@@ -60,7 +64,3 @@ pitest {
 }
 ```
 See [gradle-pitest-plugin documentation](http://gradle-pitest-plugin.solidsoft.info/) for more configuration options.
-
-## About
-
-

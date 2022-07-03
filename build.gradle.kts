@@ -50,15 +50,19 @@ java {
 
 publishing {
     publications {
-        create<MavenPublication>("pitest-kotlin") {
+        create<MavenPublication>("pitest-kotlin-plugin") {
             from(components["java"])
         }
     }
 
     repositories {
         maven {
-            name = "github-pitest-kotlin"
+            name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/stepin/pitest-kotlin")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
         }
     }
 }
