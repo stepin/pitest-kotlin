@@ -17,11 +17,18 @@ repositories {
     mavenCentral()
 }
 
+val pitestVersion = "1.8.0"
+
 dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    compileOnly("org.pitest:pitest:$pitestVersion")
+    compileOnly("org.pitest:pitest-entry:$pitestVersion")
 
+    testImplementation("org.pitest:pitest:$pitestVersion")
+    testImplementation("org.pitest:pitest-entry:$pitestVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation("io.mockk:mockk:1.12.4")
 }
 
 tasks.test {
