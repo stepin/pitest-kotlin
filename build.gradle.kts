@@ -17,7 +17,7 @@ repositories {
     mavenCentral()
 }
 
-val pitestVersion = "1.8.0"
+val pitestVersion = "1.7.4"
 
 dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
