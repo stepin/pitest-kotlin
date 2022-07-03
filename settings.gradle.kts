@@ -1,2 +1,2 @@
 
-rootProject.name = "pitest-kotlin"
+rootProject.name = "pitest-kotlin-plugin"
