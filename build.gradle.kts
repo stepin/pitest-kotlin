@@ -22,7 +22,7 @@ repositories {
     mavenCentral()
 }
 
-val pitestVersion = "1.7.4"
+val pitestVersion = "1.9.0"
 
 dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
@@ -33,6 +33,9 @@ dependencies {
 
     testImplementation("org.pitest:pitest:$pitestVersion")
     testImplementation("org.pitest:pitest-entry:$pitestVersion")
+    testImplementation("org.pitest", "pitest", "$pitestVersion", classifier = "tests")
+    testImplementation("org.pitest", "pitest-entry", "$pitestVersion", classifier = "tests")
+    testImplementation("org.assertj:assertj-core:3.23.1")
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("io.mockk:mockk:1.12.4")
 }
