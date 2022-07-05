@@ -1,5 +1,5 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.net.URL
 
 plugins {
@@ -8,7 +8,7 @@ plugins {
     `maven-publish`
     signing
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
-    id("io.gitlab.arturbosch.detekt") version "1.21.0-RC2"
+//    id("io.gitlab.arturbosch.detekt") version "1.21.0-RC2"
     id("org.jetbrains.dokka") version "1.7.0"
     jacoco
     id("org.sonarqube") version "3.4.0.2513"
@@ -22,7 +22,7 @@ repositories {
     mavenCentral()
 }
 
-val pitestVersion = "1.9.0"
+val pitestVersion = "1.7.4"
 
 dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
@@ -35,7 +35,7 @@ dependencies {
     testImplementation("org.pitest:pitest-entry:$pitestVersion")
     testImplementation("org.pitest", "pitest", "$pitestVersion", classifier = "tests")
     testImplementation("org.pitest", "pitest-entry", "$pitestVersion", classifier = "tests")
-    testImplementation("org.assertj:assertj-core:3.23.1")
+    testImplementation("org.assertj:assertj-core:3.19.0")
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("io.mockk:mockk:1.12.4")
 }

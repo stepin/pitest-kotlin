@@ -13,7 +13,6 @@ import org.pitest.sequence.Context
 import org.pitest.sequence.Match
 import org.pitest.sequence.QueryParams
 import org.pitest.sequence.QueryStart
-import org.pitest.sequence.Result
 import org.pitest.sequence.SequenceQuery
 import org.pitest.sequence.Slot
 import java.util.regex.Pattern
@@ -46,8 +45,8 @@ object KotlinJunkMutationDetector {
                 .findFirst()
                 .get()
             val mutatedInstruction = method.instruction(instruction)
-//            val context = Context.start(method.instructions(), DEBUG)
-            val context = Context.start(DEBUG)
+            val context = Context.start(method.instructions(), DEBUG)
+//            val context = Context.start(DEBUG)
             context.store(MUTATED_INSTRUCTION.write(), mutatedInstruction)
             KOTLIN_JUNK.matches(method.instructions(), context)
         }
@@ -111,14 +110,13 @@ object KotlinJunkMutationDetector {
         val componentPattern = Pattern.compile("component\\d")
         return object : Match<AbstractInsnNode> {
             override fun test(
-                c: Context,
+                c: Context<AbstractInsnNode>,
                 abstractInsnNode: AbstractInsnNode?
-            ): Result<AbstractInsnNode> {
-                val res = if (abstractInsnNode is MethodInsnNode) {
+            ): Boolean {
+                return if (abstractInsnNode is MethodInsnNode) {
                     val call = abstractInsnNode
                     isDestructuringCall(call) && takesNoArgs(call)
                 } else false
-                return Result.result(res, c) as Result<AbstractInsnNode>
             }
 
             private fun isDestructuringCall(call: MethodInsnNode): Boolean {
@@ -140,8 +138,8 @@ object KotlinJunkMutationDetector {
     }
 
     private fun containMutation(found: Slot<Boolean>): Match<AbstractInsnNode> {
-        return Match { context: Context, _: AbstractInsnNode? ->
-            Result.result(context.retrieve(found.read()).isPresent, context)
+        return Match { context: Context<AbstractInsnNode>, _: AbstractInsnNode? ->
+            context.retrieve(found.read()).isPresent
         }
     }
 }
