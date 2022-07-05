@@ -72,52 +72,57 @@ val javadocJar: TaskProvider<Jar> by tasks.registering(Jar::class) {
     from(dokkaHtml.outputDirectory)
 }
 
+val mavenCentralUsername: String by project
+val mavenCentralPassword: String by project
+
 publishing {
-    publications.withType<MavenPublication> {
-        artifact(javadocJar)
-        pom {
-            val projectGitUrl = "https://github.com/stepin/pitest-kotlin"
-            name.set(rootProject.name)
-            description.set("Improves pitest's support for Kotlin.")
-            url.set(projectGitUrl)
-            inceptionYear.set("2022")
-            licenses {
-                license {
-                    name.set("Apache License, Version 2.0")
-                    url.set("https://opensource.org/licenses/Apache-2.0")
-                }
-            }
-            developers {
-                developer {
-                    id.set("stepin.name")
-                    name.set("Igor Stepin")
-                    email.set("igor_for_os@stepin.name")
-                    url.set("https://stepin.name")
-                }
-            }
-            issueManagement {
-                system.set("GitHub")
-                url.set("$projectGitUrl/issues")
-            }
-            scm {
-                connection.set("scm:git:$projectGitUrl")
-                developerConnection.set("scm:git:$projectGitUrl")
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+            artifact(javadocJar)
+            pom {
+                val projectGitUrl = "https://github.com/stepin/pitest-kotlin"
+                name.set(rootProject.name)
+                description.set("Improves pitest's support for Kotlin.")
                 url.set(projectGitUrl)
+                inceptionYear.set("2022")
+                licenses {
+                    license {
+                        name.set("Apache License, Version 2.0")
+                        url.set("https://opensource.org/licenses/Apache-2.0")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("stepin.name")
+                        name.set("Igor Stepin")
+                        email.set("igor_for_os@stepin.name")
+                        url.set("https://stepin.name")
+                    }
+                }
+                issueManagement {
+                    system.set("GitHub")
+                    url.set("$projectGitUrl/issues")
+                }
+                scm {
+                    connection.set("scm:git:$projectGitUrl")
+                    developerConnection.set("scm:git:$projectGitUrl")
+                    url.set(projectGitUrl)
+                }
             }
+            the<SigningExtension>().sign(this)
         }
-        the<SigningExtension>().sign(this)
     }
     repositories {
         maven {
             name = "sonatypeStaging"
             url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-            credentials(PasswordCredentials::class)
+            credentials {
+                username = mavenCentralUsername
+                password = mavenCentralPassword
+            }
         }
     }
-}
-
-signing {
-    useGpgCmd()
 }
 
 tasks.test {
